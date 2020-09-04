@@ -17,14 +17,20 @@ const reducer = (state, action) => {
   return state;
 };
 
-export default function App() {
+const useGet = (url) => {
   const [data, dispatch] = useReducer(reducer, { loading: true, data: {} });
 
   useEffect(() => {
-    axios.get(URL_API).then((response) => {
+    axios.get(url).then((response) => {
       dispatch({ type: 'LOAD_DATA_SUCCESS', data: response.data });
     });
-  }, []);
+  }, [url]);
+
+  return data;
+};
+
+export default function App() {
+  const data = useGet(URL_API);
 
   return (
     <div className="App">
